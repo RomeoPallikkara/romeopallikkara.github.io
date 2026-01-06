@@ -572,75 +572,43 @@
         }
         
         /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
+        .contact-info {
+            max-width: 1200px;
             margin: 3rem auto 0;
-        }
-        
-        .contact-card {
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 20px;
             text-align: center;
-            border: 1px solid rgba(167, 139, 250, 0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
         }
         
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(167, 139, 250, 0.1), transparent);
-            transform: translate(-50%, -50%);
-            transition: width 0.5s, height 0.5s;
-            border-radius: 50%;
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: nowrap;
+            margin-top: 2rem;
         }
         
-        .contact-card:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .contact-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-purple);
-            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.2);
-        }
-        
-        .contact-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .contact-card h3 {
-            color: var(--accent-purple);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .contact-card a {
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 10px;
             color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s;
-            position: relative;
-            z-index: 1;
+            transition: all 0.3s;
+            font-size: 0.95rem;
         }
         
-        .contact-card:hover a {
+        .contact-link:hover {
+            border-color: var(--accent-purple);
             color: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(167, 139, 250, 0.15);
+        }
+        
+        .contact-link span {
+            font-size: 1.2rem;
         }
         
         /* Footer */
@@ -707,6 +675,10 @@
             .profile-image {
                 font-size: 5rem;
             }
+            
+            .contact-links {
+                flex-wrap: wrap;
+            }
         }
         
         /* Scroll Reveal Animation */
@@ -772,9 +744,7 @@
             <div class="about-grid">
                 <div class="profile-card reveal">
                     <div class="profile-image-wrapper">
-                        <div class="profile-image">
-                            <img src="your-photo.jpg" alt="Romeo Pallikkara" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;">
-                        </div>
+                        <div class="profile-image">🌌</div>
                     </div>
                 </div>
                 <div class="about-content reveal">
@@ -928,29 +898,20 @@
                 <h2>Let's Connect</h2>
                 <p>Open to collaborations and research discussions</p>
             </div>
-            <div class="contact-grid">
-                <div class="contact-card reveal">
-                    <div class="contact-icon">📧</div>
-                    <h3>Email</h3>
-                    <a href="mailto:romeopallikkara@gmail.com">romeopallikkara@gmail.com</a>
-                </div>
-                
-                <div class="contact-card reveal">
-                    <div class="contact-icon">🔬</div>
-                    <h3>ORCID</h3>
-                    <a href="https://orcid.org/0009-0002-8080-5804" target="_blank">0009-0002-8080-5804</a>
-                </div>
-                
-                <div class="contact-card reveal">
-                    <div class="contact-icon">💻</div>
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/RomeoPallikkara" target="_blank">@RomeoPallikkara</a>
-                </div>
-                
-                <div class="contact-card reveal">
-                    <div class="contact-icon">🐦</div>
-                    <h3>Twitter</h3>
-                    <a href="https://twitter.com/PallikkaraRomeo" target="_blank">@PallikkaraRomeo</a>
+            <div class="contact-info reveal">
+                <div class="contact-links">
+                    <a href="mailto:romeopallikkara@gmail.com" class="contact-link">
+                        <span>📧</span> romeopallikkara@gmail.com
+                    </a>
+                    <a href="https://orcid.org/0009-0002-8080-5804" target="_blank" class="contact-link">
+                        <span>🔬</span> ORCID
+                    </a>
+                    <a href="https://github.com/RomeoPallikkara" target="_blank" class="contact-link">
+                        <span>💻</span> GitHub
+                    </a>
+                    <a href="https://twitter.com/PallikkaraRomeo" target="_blank" class="contact-link">
+                        <span>🐦</span> Twitter
+                    </a>
                 </div>
             </div>
         </div>
