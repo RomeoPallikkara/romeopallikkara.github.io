@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romeo Pallikkara | Astronomy PhD Student</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: #1a1a2e;
+            --accent-purple: #a78bfa;
+            --accent-blue: #60a5fa;
+            --accent-pink: #f472b6;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Galaxy Animation Background */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 50px) scale(0.9); }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, transparent);
+            animation: shoot 3s ease-out infinite;
+        }
+        
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-500px) translateY(500px);
+                opacity: 0;
+            }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+        }
+        
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--accent-purple);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            min-height: 100vh;
+            padding: 8rem 0 6rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Hero Section */
+        #hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(167, 139, 250, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-purple) 50%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .hero-affiliation {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--accent-purple);
+            color: var(--accent-purple);
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(167, 139, 250, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-label {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: rgba(167, 139, 250, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section-header h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        
+        .profile-card {
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .profile-image-wrapper {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(96, 165, 250, 0.2));
+            padding: 3px;
+            transition: transform 0.5s;
+        }
+        
+        .profile-card:hover .profile-image-wrapper {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-card);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(167, 139, 250, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-secondary);
+        }
+        
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-content strong {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+        
+        /* Research Cards */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .research-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(167, 139, 250, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.05), rgba(96, 165, 250, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .research-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
+        }
+        
+        .research-card:hover::before {
+            opacity: 1;
+        }
+        
+        .research-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        
+        .research-card h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .research-duration {
+            color: var(--accent-purple);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .research-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        
+        /* Publications */
+        .publication-list {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .publication-item {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border-left: 4px solid var(--accent-purple);
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .publication-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-purple), var(--accent-blue));
+            transition: width 0.3s;
+        }
+        
+        .publication-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 10px 40px rgba(167, 139, 250, 0.15);
+        }
+        
+        .publication-item:hover::before {
+            width: 100%;
+            opacity: 0.05;
+        }
+        
+        .publication-item h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .publication-authors {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .publication-link {
+            color: var(--accent-purple);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .publication-link:hover {
+            color: var(--accent-blue);
+            gap: 0.8rem;
+        }
+        
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(167, 139, 250, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .skill-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.15);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-card h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-list li {
+            padding: 0.7rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+            transition: all 0.2s;
+        }
+        
+        .skill-list li:hover {
+            color: var(--accent-purple);
+            padding-left: 0.5rem;
+        }
+        
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto 0;
+        }
+        
+        .contact-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(167, 139, 250, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.1), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+        }
+        
+        .contact-card:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.2);
+        }
+        
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-card h3 {
+            color: var(--accent-purple);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-card a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-card:hover a {
+            color: var(--accent-purple);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(167, 139, 250, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        footer p {
+            color: var(--text-muted);
+            margin: 0.3rem 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.8rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 5rem 0 3rem;
+            }
+            
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-image-wrapper {
+                max-width: 300px;
+                height: 300px;
+            }
+            
+            .profile-image {
+                font-size: 5rem;
+            }
+        }
+        
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Galaxy Background -->
+    <div class="galaxy-bg" id="galaxyBg"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">RP</div>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">PhD Student in Astronomy</div>
+                <h1>Romeo Pallikkara</h1>
+                <p class="hero-subtitle">Exploring the Early Universe Through Observational Astronomy</p>
+                <p class="hero-affiliation">INAF - Osservatorio Astronomico di Trieste</p>
+                <div class="hero-buttons">
+                    <a href="cv.pdf" class="btn btn-primary" download>
+                        <span>📄</span> Download CV
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <span>📧</span> Get in Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">About Me</span>
+                <h2>Who I Am</h2>
+                <p>Passionate about understanding the cosmos through data and observation</p>
+            </div>
+            <div class="about-grid">
+                <div class="profile-card reveal">
+                    <div class="profile-image-wrapper">
+                        <div class="profile-image">🌌</div>
+                    </div>
+                </div>
+                <div class="about-content reveal">
+                    <p>I am a <strong>PhD student in Astronomy</strong> at INAF - Osservatorio Astronomico di Trieste, Italy, dedicated to unraveling the mysteries of the early universe through cutting-edge observational techniques.</p>
+                    <p>My research focuses on studying the <strong>evolution of galaxies and supermassive black holes</strong> in the early universe using data from premier space telescopes including the James Webb Space Telescope (JWST) and the Hubble Space Telescope (HST).</p>
+                    <p>I completed my <strong>BS-MS in Physics</strong> from the Indian Institute of Science Education and Research (IISER) Mohali, where I developed expertise in observational astronomy, spectroscopic analysis, and computational astrophysics.</p>
+                    <p>My work combines theoretical understanding with practical data analysis, utilizing advanced photometry, spectral energy distribution modeling, and statistical techniques to push the boundaries of our understanding of cosmic evolution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Research Section -->
+    <section id="research">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Research</span>
+                <h2>Research Experience</h2>
+                <p>Cutting-edge projects in observational astronomy and cosmology</p>
+            </div>
+            <div class="research-grid">
+                <div class="research-card reveal">
+                    <div class="research-icon">🔭</div>
+                    <h3>UV Luminosity Functions with JWST</h3>
+                    <span class="research-duration">June 2024 - April 2025 | Master's Thesis</span>
+                    <p>Investigating galaxy luminosity functions at z = 8-15 using JWST NIRCam and NIRSpec data to understand early universe star formation and hydrogen reionization.</p>
+                </div>
+                
+                <div class="research-card reveal">
+                    <div class="research-icon">🪐</div>
+                    <h3>European Astrobiology Institute</h3>
+                    <span class="research-duration">2023 - Present</span>
+                    <p>Working group member focused on formation and evolution of planetary systems and detection of habitable worlds.</p>
+                </div>
+                
+                <div class="research-card reveal">
+                    <div class="research-icon">✨</div>
+                    <h3>Chandra X-Ray Data Analysis</h3>
+                    <span class="research-duration">June 2023 - Present | IIT Hyderabad</span>
+                    <p>Spectral analysis of astronomical sources using Chandra telescope data, focusing on non-nuclear sources and complex SED fitting techniques.</p>
+                </div>
+                
+                <div class="research-card reveal">
+                    <div class="research-icon">⚡</div>
+                    <h3>Jetted Sources Analysis</h3>
+                    <span class="research-duration">May 2023 - Sept 2023 | IISER Mohali</span>
+                    <p>Studying spectro-temporal properties of BL Lac source S5 0716+714 using SWIFT UVOT data and advanced spectral energy distribution analysis.</p>
+                </div>
+                
+                <div class="research-card reveal">
+                    <div class="research-icon">🌠</div>
+                    <h3>Intergalactic Medium Studies</h3>
+                    <span class="research-duration">May 2022 - July 2022 | IIST</span>
+                    <p>Detection of weak O VI absorption in the IGM through spectral stacking analysis using HST Cosmic Origins Spectrograph data.</p>
+                </div>
+                
+                <div class="research-card reveal">
+                    <div class="research-icon">📡</div>
+                    <h3>Radio Astronomy & Pulsar Analysis</h3>
+                    <span class="research-duration">Aug 2021 - Sep 2023 | RRI</span>
+                    <p>Vela pulsar data analysis as part of the Indian Sky Watch Array Network (SWAN) project, studying radio signal properties.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Publications Section -->
+    <section id="publications">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Publications</span>
+                <h2>Research Output</h2>
+                <p>Peer-reviewed contributions to astronomical science</p>
+            </div>
+            <div class="publication-list">
+                <div class="publication-item reveal">
+                    <h3>Discovery of Weak O VI Absorption in Underdense Regions of the Low-Redshift Intergalactic Medium</h3>
+                    <p class="publication-authors">Khaire, Vikram; Mishra Sapna; Pallikara Romeo; Narayanan Anand</p>
+                    <a href="#" class="publication-link" target="_blank">View on arXiv →</a>
+                </div>
+                
+                <div class="publication-item reveal">
+                    <h3>Upcoming Publications</h3>
+                    <p class="publication-authors">Research manuscripts in preparation from ongoing JWST and X-ray studies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Expertise</span>
+                <h2>Technical Skills</h2>
+                <p>Advanced tools and methodologies for astronomical research</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card reveal">
+                    <div class="skill-icon">💻</div>
+                    <h3>Programming</h3>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li>Bash Scripting</li>
+                        <li>R Statistical Computing</li>
+                        <li>C++</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-card reveal">
+                    <div class="skill-icon">📊</div>
+                    <h3>Data Analysis</h3>
+                    <ul class="skill-list">
+                        <li>HEASoft & XSPEC</li>
+                        <li>DS9 & IRAF</li>
+                        <li>CIAO (Chandra)</li>
+                        <li>JWST & HST Pipelines</li>
+                    </ul>
