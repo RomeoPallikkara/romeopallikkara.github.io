@@ -1,1024 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romeo Pallikkara | Astronomy PhD Student</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --bg-dark: #0a0a1a;
-            --bg-card: #1a1a2e;
-            --accent-purple: #a78bfa;
-            --accent-blue: #60a5fa;
-            --accent-pink: #f472b6;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Galaxy Animation Background */
-        .galaxy-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-        
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 4s infinite ease-in-out;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        
-        .nebula {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            animation: float 20s infinite ease-in-out;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -30px) scale(1.1); }
-            66% { transform: translate(-30px, 50px) scale(0.9); }
-        }
-        
-        .shooting-star {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, #fff, transparent);
-            animation: shoot 3s ease-out infinite;
-        }
-        
-        @keyframes shoot {
-            0% {
-                transform: translateX(0) translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-500px) translateY(500px);
-                opacity: 0;
-            }
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 26, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 1.2rem 2rem;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(167, 139, 250, 0.1);
-        }
-        
-        nav .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2.5rem;
-        }
-        
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        nav a:hover {
-            color: var(--accent-purple);
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
-            transition: width 0.3s;
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        section {
-            min-height: 100vh;
-            padding: 8rem 0 6rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Hero Section */
-        #hero {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .hero-content {
-            text-align: center;
-            max-width: 900px;
-        }
-        
-        .hero-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(167, 139, 250, 0.1);
-            border: 1px solid rgba(167, 139, 250, 0.3);
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: var(--accent-purple);
-            margin-bottom: 2rem;
-            animation: fadeInDown 0.8s ease-out;
-        }
-        
-        .hero-content h1 {
-            font-size: 5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-purple) 50%, var(--accent-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-        
-        .hero-affiliation {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.8s both;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Buttons */
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white;
-            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4);
-        }
-        
-        .btn-outline {
-            border: 2px solid var(--accent-purple);
-            color: var(--accent-purple);
-            background: transparent;
-        }
-        
-        .btn-outline:hover {
-            background: rgba(167, 139, 250, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-        
-        .section-label {
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            background: rgba(167, 139, 250, 0.1);
-            border: 1px solid rgba(167, 139, 250, 0.3);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--accent-purple);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .section-header h2 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .section-header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        /* About Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 5rem;
-            align-items: center;
-        }
-        
-        .profile-card {
-            position: relative;
-            perspective: 1000px;
-        }
-        
-        .profile-image-wrapper {
-            width: 100%;
-            max-width: 400px;
-            height: 400px;
-            margin: 0 auto;
-            position: relative;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(96, 165, 250, 0.2));
-            padding: 3px;
-            transition: transform 0.5s;
-        }
-        
-        .profile-card:hover .profile-image-wrapper {
-            transform: rotateY(5deg) rotateX(5deg);
-        }
-        
-        .profile-image {
-            width: 100%;
-            height: 100%;
-            background: var(--bg-card);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .profile-image::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(167, 139, 250, 0.1), transparent);
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .about-content {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: var(--text-secondary);
-        }
-        
-        .about-content p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .about-content strong {
-            color: var(--accent-purple);
-            font-weight: 600;
-        }
-        
-        /* Research Cards */
-        .research-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 2.5rem;
-        }
-        
-        .research-card {
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(167, 139, 250, 0.1);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .research-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.05), rgba(96, 165, 250, 0.05));
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        
-        .research-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-purple);
-            box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
-        }
-        
-        .research-card:hover::before {
-            opacity: 1;
-        }
-        
-        .research-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-        
-        .research-card h3 {
-            font-size: 1.4rem;
-            color: var(--text-primary);
-            margin-bottom: 0.8rem;
-            font-weight: 700;
-        }
-        
-        .research-duration {
-            color: var(--accent-purple);
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .research-card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-        
-        /* Publications */
-        .publication-list {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .publication-item {
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border-left: 4px solid var(--accent-purple);
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            pointer-events: auto;
-        }
-        
-        .publication-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--accent-purple), var(--accent-blue));
-            transition: width 0.3s;
-        }
-        
-        .publication-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 10px 40px rgba(167, 139, 250, 0.15);
-        }
-        
-        .publication-item:hover::before {
-            width: 100%;
-            opacity: 0.05;
-        }
-        
-        .publication-item h3 {
-            font-size: 1.3rem;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-        
-        .publication-authors {
-            color: var(--text-muted);
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-        
-        .publication-link {
-            color: var(--accent-purple);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-        }
-        
-        .publication-link:hover {
-            color: var(--accent-blue);
-            gap: 0.8rem;
-        }
-        
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        
-        .skill-card {
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(167, 139, 250, 0.1);
-            transition: all 0.3s;
-        }
-        
-        .skill-card:hover {
-            border-color: var(--accent-purple);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.15);
-        }
-        
-        .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .skill-card h3 {
-            font-size: 1.3rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .skill-list {
-            list-style: none;
-        }
-        
-        .skill-list li {
-            padding: 0.7rem 0;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(167, 139, 250, 0.1);
-            transition: all 0.2s;
-        }
-        
-        .skill-list li:hover {
-            color: var(--accent-purple);
-            padding-left: 0.5rem;
-        }
-        
-        .skill-list li:last-child {
-            border-bottom: none;
-        }
-        
-        /* Contact Section */
-        .contact-info {
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            text-align: center;
-        }
-        
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: nowrap;
-            margin-top: 2rem;
-        }
-        
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid rgba(167, 139, 250, 0.2);
-            border-radius: 10px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        
-        .contact-link:hover {
-            border-color: var(--accent-purple);
-            color: var(--accent-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(167, 139, 250, 0.15);
-        }
-        
-        .contact-link span {
-            font-size: 1.2rem;
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--bg-card);
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid rgba(167, 139, 250, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-        
-        footer p {
-            color: var(--text-muted);
-            margin: 0.3rem 0;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-content h1 {
-                font-size: 4rem;
-            }
-            
-            .section-header h2 {
-                font-size: 2.8rem;
-            }
-            
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav ul {
-                gap: 1.5rem;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .section-header h2 {
-                font-size: 2rem;
-            }
-            
-            section {
-                padding: 5rem 0 3rem;
-            }
-            
-            .research-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-image-wrapper {
-                max-width: 300px;
-                height: 300px;
-            }
-            
-            .profile-image {
-                font-size: 5rem;
-            }
-            
-            .contact-links {
-                flex-wrap: wrap;
-            }
-        }
-        
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.6s ease-out;
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romeo Pallikkara | Astronomy PhD Student</title>
+<meta name="description" content="Romeo Pallikkara, PhD student in Astronomy at INAF - Osservatorio Astronomico di Trieste. Early-universe galaxies and supermassive black holes with JWST and HST.">
+<meta name="theme-color" content="#05060a">
+<meta name="author" content="Romeo Pallikkara">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Romeo Pallikkara | Astronomy PhD Student">
+<meta property="og:description" content="Romeo Pallikkara, PhD student in Astronomy at INAF - Osservatorio Astronomico di Trieste. Early-universe galaxies and supermassive black holes with JWST and HST.">
+<meta property="og:url" content="https://romeopallikkara.github.io/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Romeo Pallikkara | Astronomy PhD Student">
+<meta name="twitter:description" content="Romeo Pallikkara, PhD student in Astronomy at INAF - Osservatorio Astronomico di Trieste. Early-universe galaxies and supermassive black holes with JWST and HST.">
+<link rel="canonical" href="https://romeopallikkara.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%23c8b48a'%3ERP%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script>(function(){var d=document.documentElement,m=null;d.className+=' js';try{m=localStorage.getItem('motion')}catch(e){}if(m!=='full'&&m!=='reduced')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'full';d.dataset.motion=m})()</script>
 </head>
 <body>
-    <!-- Galaxy Background -->
-    <div class="galaxy-bg" id="galaxyBg"></div>
-    
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <div class="logo">RP</div>
-            <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#research">Research</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+<div class="intro" id="intro" aria-hidden="true"><span class="intro-mark">RP</span><span class="intro-count" id="ic">000</span></div>
+<div class="cur" id="cur" aria-hidden="true"><i></i></div>
+<canvas id="trail" aria-hidden="true"></canvas>
+<canvas id="nebulagl" aria-hidden="true"></canvas>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="nebula" aria-hidden="true"></div>
+<div id="glow" aria-hidden="true"></div>
+<div class="bar" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="full">Romeo Pallikkara</span><span class="short">RP</span></a>
+    <nav class="menu" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="cv.pdf">CV</a>
     </nav>
-    
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">PhD Student in Astronomy</div>
-                <h1>Romeo Pallikkara</h1>
-                <p class="hero-subtitle">Exploring the Early Universe Through Observational Astronomy</p>
-                <p class="hero-affiliation">INAF - Osservatorio Astronomico di Trieste</p>
-                <div class="hero-buttons">
-                    <a href="cv.pdf" class="btn btn-primary" download>
-                        <span>📄</span> Download CV
-                    </a>
-                    <a href="#contact" class="btn btn-outline">
-                        <span>📧</span> Get in Touch
-                    </a>
-                </div>
-            </div>
+  </div>
+</header>
+
+<div class="hud" aria-hidden="true">
+  <div class="hud-left">
+    <span>z <b id="hz">0.00</b></span>
+    <span id="ht">0.0 Gyr ago</span>
+    <span class="epoch" id="he">Today</span>
+    <span id="hs">&ndash; kpc/&Prime;</span>
+    <span id="hl">Ly&alpha; &rarr; 0.12 &micro;m</span>
+  </div>
+  <canvas id="sed" class="sed" width="220" height="48"></canvas>
+</div>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <p class="kicker">PhD student in Astronomy</p>
+      <h1 class="display"><span class="line"><span>Romeo</span></span><span class="line"><span>Pallikkara</span></span></h1>
+      <p class="hero-sub">Exploring the early universe through observational astronomy.</p>
+      <div class="cue"><i></i>Scroll to travel back in time</div>
+      <dl class="hero-meta">
+        <div><dt>Based in</dt><dd>Trieste, Italy</dd></div>
+        <div><dt>Field</dt><dd>Observational astronomy</dd></div>
+        <div><dt>Working with</dt><dd>JWST, HST, Chandra</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="chapter about" id="about">
+    <div class="wrap grid">
+      <aside class="about-side">
+        <div class="portrait" data-speed="-0.05"><img src="your-photo.jpg" alt="Portrait of Romeo Pallikkara" loading="lazy"></div>
+      </aside>
+      <div class="about-body">
+        <p class="label" data-reveal>01 · About</p>
+        <p class="scrub" data-scrub>I study how galaxies and their supermassive black holes grew in the early universe, using data from the James Webb Space Telescope and the Hubble Space Telescope.</p>
+        <p class="muted" data-reveal>I am a PhD student in Astronomy at INAF &ndash; Osservatorio Astronomico di Trieste, Italy. My work combines photometry, spectral energy distribution modelling and statistical techniques to push the boundaries of what we know about cosmic evolution.</p>
+        <p class="muted" data-reveal>I completed my BS-MS in Physics at the Indian Institute of Science Education and Research (IISER) Mohali, where I developed expertise in observational astronomy, spectroscopic analysis and computational astrophysics.</p>
+        <div class="links" data-reveal>
+          <a href="mailto:romeo.pallikkara@inaf.it">Email</a>
+          <a href="https://orcid.org/0009-0002-8080-5804" target="_blank" rel="noopener">ORCID</a>
+          <a href="https://github.com/RomeoPallikkara" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/romeopallikkara" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://twitter.com/PallikkaraRomeo" target="_blank" rel="noopener">Twitter</a>
         </div>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">About Me</span>
-                <h2>Who I Am</h2>
-                <p>Passionate about understanding the cosmos through data and observation</p>
-            </div>
-            <div class="about-grid">
-                <div class="profile-card reveal">
-                    <div class="profile-image-wrapper">
-                        <div class="profile-image">
-                            <img src="your-photo.jpg" alt="Romeo Pallikkara" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;">
-                        </div>
-                    </div>
-                </div>
-                <div class="about-content reveal">
-                    <p>I am a <strong>PhD student in Astronomy</strong> at INAF - Osservatorio Astronomico di Trieste, Italy, dedicated to unraveling the mysteries of the early universe through cutting-edge observational techniques.</p>
-                    <p>My research focuses on studying the <strong>evolution of galaxies and supermassive black holes</strong> in the early universe using data from premier space telescopes including the James Webb Space Telescope (JWST) and the Hubble Space Telescope (HST).</p>
-                    <p>I completed my <strong>BS-MS in Physics</strong> from the Indian Institute of Science Education and Research (IISER) Mohali, where I developed expertise in observational astronomy, spectroscopic analysis, and computational astrophysics.</p>
-                    <p>My work combines theoretical understanding with practical data analysis, utilizing advanced photometry, spectral energy distribution modeling, and statistical techniques to push the boundaries of our understanding of cosmic evolution.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Research Section -->
-    <section id="research">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">Research</span>
-                <h2>Research Experience</h2>
-                <p>Cutting-edge projects in observational astronomy and cosmology</p>
-            </div>
-            <div class="research-grid">
-                <div class="research-card reveal">
-                    <div class="research-icon">🔭</div>
-                    <h3>UV Luminosity Functions with JWST</h3>
-                    <span class="research-duration">June 2024 - April 2025 | Master's Thesis</span>
-                    <p>Investigating galaxy luminosity functions at z = 8-15 using JWST NIRCam and NIRSpec data to understand early universe star formation and hydrogen reionization.</p>
-                </div>
-                
-                <div class="research-card reveal">
-                    <div class="research-icon">🪐</div>
-                    <h3>European Astrobiology Institute</h3>
-                    <span class="research-duration">2023 - Present</span>
-                    <p>Working group member focused on formation and evolution of planetary systems and detection of habitable worlds.</p>
-                </div>
-                
-                <div class="research-card reveal">
-                    <div class="research-icon">✨</div>
-                    <h3>Chandra X-Ray Data Analysis</h3>
-                    <span class="research-duration">June 2023 - Present | IIT Hyderabad</span>
-                    <p>Spectral analysis of astronomical sources using Chandra telescope data, focusing on non-nuclear sources and complex SED fitting techniques.</p>
-                </div>
-                
-                <div class="research-card reveal">
-                    <div class="research-icon">⚡</div>
-                    <h3>Jetted Sources Analysis</h3>
-                    <span class="research-duration">May 2023 - Sept 2023 | IISER Mohali</span>
-                    <p>Studying spectro-temporal properties of BL Lac source S5 0716+714 using SWIFT UVOT data and advanced spectral energy distribution analysis.</p>
-                </div>
-                
-                <div class="research-card reveal">
-                    <div class="research-icon">🌠</div>
-                    <h3>Intergalactic Medium Studies</h3>
-                    <span class="research-duration">May 2022 - July 2022 | IIST</span>
-                    <p>Detection of weak O VI absorption in the IGM through spectral stacking analysis using HST Cosmic Origins Spectrograph data.</p>
-                </div>
-                
-                <div class="research-card reveal">
-                    <div class="research-icon">📡</div>
-                    <h3>Radio Astronomy & Pulsar Analysis</h3>
-                    <span class="research-duration">Aug 2021 - Sep 2023 | RRI</span>
-                    <p>Vela pulsar data analysis as part of the Indian Sky Watch Array Network (SWAN) project, studying radio signal properties.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Publications Section -->
-    <section id="publications">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">Publications</span>
-                <h2>Research Output</h2>
-                <p>Peer-reviewed contributions to astronomical science</p>
-            </div>
-            <div class="publication-list">
-                <div class="publication-item reveal">
-                    <h3>Discovery of Weak O VI Absorption in Underdense Regions of the Low-Redshift Intergalactic Medium</h3>
-                    <p class="publication-authors">Khaire, Vikram; Mishra Sapna; Pallikara Romeo; Narayanan Anand</p>
-                    <a href="https://arxiv.org/abs/2512.10163" class="publication-link" target="_blank">View on arXiv →</a>
-                </div>
-                
-                <div class="publication-item reveal">
-                    <h3>Upcoming Publications</h3>
-                    <p class="publication-authors">Research manuscripts in preparation from ongoing JWST and X-ray studies</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">Expertise</span>
-                <h2>Technical Skills</h2>
-                <p>Advanced tools and methodologies for astronomical research</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card reveal">
-                    <div class="skill-icon">💻</div>
-                    <h3>Programming</h3>
-                    <ul class="skill-list">
-                        <li>Python</li>
-                        <li>Bash Scripting</li>
-                        <li>R Statistical Computing</li>
-                        <li>C++</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-card reveal">
-                    <div class="skill-icon">📊</div>
-                    <h3>Data Analysis</h3>
-                    <ul class="skill-list">
-                        <li>HEASoft & XSPEC</li>
-                        <li>DS9 & IRAF</li>
-                        <li>CIAO (Chandra)</li>
-                        <li>JWST & HST Pipelines</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-card reveal">
-                    <div class="skill-icon">🔬</div>
-                    <h3>Photometry & SED</h3>
-                    <ul class="skill-list">
-                        <li>Prospector</li>
-                        <li>Bagpipes</li>
-                        <li>SExtractor</li>
-                        <li>EAZY & GALFIT</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-card reveal">
-                    <div class="skill-icon">📈</div>
-                    <h3>Statistical Methods</h3>
-                    <ul class="skill-list">
-                        <li>MCMC</li>
-                        <li>Bayesian Analysis</li>
-                        <li>Machine Learning</li>
-                        <li>Random Forest & k-NN</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">Contact</span>
-                <h2>Let's Connect</h2>
-                <p>Open to collaborations and research discussions</p>
-            </div>
-            <div class="contact-info reveal">
-                <div class="contact-links">
-                    <a href="mailto:romeopallikkara@gmail.com" class="contact-link">
-                        <span>📧</span> romeopallikkara@gmail.com
-                    </a>
-                    <a href="https://orcid.org/0009-0002-8080-5804" target="_blank" class="contact-link">
-                        <span>🔬</span> ORCID
-                    </a>
-                    <a href="https://github.com/RomeoPallikkara" target="_blank" class="contact-link">
-                        <span>💻</span> GitHub
-                    </a>
-                    <a href="https://linkedin.com/in/romeopallikkara" target="_blank" class="contact-link">
-                        <span>💼</span> LinkedIn
-                    </a>
-                    <a href="https://twitter.com/PallikkaraRomeo" target="_blank" class="contact-link">
-                        <span>🐦</span> Twitter
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Romeo Pallikkara. All rights reserved.</p>
-            <p>PhD Student in Astronomy | INAF - Osservatorio Astronomico di Trieste</p>
-        </div>
-    </footer>
-    
-    <script>
-        // Generate galaxy background with stars, nebulae, and shooting stars
-        const galaxyBg = document.getElementById('galaxyBg');
-        
-        // Create stars
-        for (let i = 0; i < 200; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = Math.random() * 3 + 1 + 'px';
-            star.style.height = star.style.width;
-            star.style.animationDelay = Math.random() * 4 + 's';
-            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            galaxyBg.appendChild(star);
-        }
-        
-        // Create nebulae
-        const nebulaeColors = [
-            'rgba(167, 139, 250, 0.3)',
-            'rgba(96, 165, 250, 0.3)',
-            'rgba(244, 114, 182, 0.3)',
-            'rgba(139, 92, 246, 0.3)'
-        ];
-        
-        for (let i = 0; i < 5; i++) {
-            const nebula = document.createElement('div');
-            nebula.className = 'nebula';
-            nebula.style.left = Math.random() * 100 + '%';
-            nebula.style.top = Math.random() * 100 + '%';
-            nebula.style.width = (Math.random() * 300 + 200) + 'px';
-            nebula.style.height = nebula.style.width;
-            nebula.style.background = nebulaeColors[i % nebulaeColors.length];
-            nebula.style.animationDelay = Math.random() * 10 + 's';
-            nebula.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            galaxyBg.appendChild(nebula);
-        }
-        
-        // Create shooting stars periodically
-        function createShootingStar() {
-            const shootingStar = document.createElement('div');
-            shootingStar.className = 'shooting-star';
-            shootingStar.style.left = Math.random() * 100 + '%';
-            shootingStar.style.top = Math.random() * 50 + '%';
-            shootingStar.style.width = (Math.random() * 100 + 50) + 'px';
-            galaxyBg.appendChild(shootingStar);
-            
-            setTimeout(() => {
-                shootingStar.remove();
-            }, 3000);
-        }
-        
-        setInterval(createShootingStar, 4000);
-        
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const revealPoint = 100;
-                
-                if (elementTop < windowHeight - revealPoint) {
-                    element.classList.add('active');
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // Initial check
-    </script>
+      </div>
+    </div>
+  </section>
+
+  <section class="hscroll" id="research">
+    <div class="hpin">
+      <div class="hhead">
+        <p class="label">02 &middot; Research</p>
+        <h2>[Headline about your research]</h2>
+      </div>
+      <div class="htrack">
+        <article class="card">
+          <div class="idx">01</div>
+          <div class="when">[Dates]</div>
+          <h3>[Project title]</h3>
+          <p>[Two sentences about the project and your contribution.]</p>
+        </article>
+        <article class="card">
+          <div class="idx">02</div>
+          <div class="when">[Dates]</div>
+          <h3>[Project title]</h3>
+          <p>[Two sentences about the project and your contribution.]</p>
+        </article>
+        <article class="card">
+          <div class="idx">03</div>
+          <div class="when">[Dates]</div>
+          <h3>[Project title]</h3>
+          <p>[Two sentences about the project and your contribution.]</p>
+        </article>
+        <article class="card">
+          <div class="idx">04</div>
+          <div class="when">[Dates]</div>
+          <h3>[Project title]</h3>
+          <p>[Two sentences about the project and your contribution.]</p>
+        </article>
+      </div>
+      <div class="hbar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="publications">
+    <div class="wrap">
+      <div class="pubs-head" data-reveal>
+        <p class="label">03 &middot; Publications</p>
+        <h2>Research output</h2>
+      </div>
+      <a class="pub" href="https://doi.org/10.3847/1538-4357/ae95fb" target="_blank" rel="noopener" data-reveal>
+        <span class="yr">2026</span>
+        <span class="ttl">Discovery of Weak O VI Absorption in Underdense Regions of the Low-redshift Intergalactic Medium<span class="au">Mishra, Khaire, <span class="me">Pallikkara</span>, Narayanan, Fox</span></span>
+        <span class="ven">ApJ 1008, 134</span>
+        <span class="arr">&nearr;</span>
+      </a>
+      <div class="pub" data-reveal>
+        <span class="yr">Upcoming</span>
+        <span class="ttl">A uniform, spectroscopically validated search for 8 &lt; <i>z</i> &lt; 13.5 galaxies in JWST CEERS<span class="au"><span class="me">Pallikkara</span>, Hazarika, Khaire</span></span>
+        <span class="ven">In preparation</span>
+        <span class="arr"></span>
+      </div>
+      <div class="pub" data-reveal>
+        <span class="yr">Upcoming</span>
+        <span class="ttl">The UV luminosity function and galaxy properties at 8.5 &lt; <i>z</i> &lt; 13.5 in JWST CEERS<span class="au">Hazarika, <span class="me">Pallikkara</span>, Khaire</span></span>
+        <span class="ven">In preparation</span>
+        <span class="arr"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter contact" id="contact">
+    <div class="wrap">
+      <p class="label" data-reveal>04 &middot; Contact</p>
+      <h2 data-reveal>Let&rsquo;s connect</h2>
+      <p class="muted" data-reveal style="margin-bottom:1.8rem">Open to collaborations and research discussions.</p>
+      <a class="mail" href="mailto:romeo.pallikkara@inaf.it" data-reveal data-delay="150">romeo.pallikkara@inaf.it</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-name" aria-hidden="true">Romeo Pallikkara</div>
+    <details class="sky-note">
+      <summary>About this sky</summary>
+      <p>The background is procedurally generated and illustrative, not a data image. Stars sit on the celestial sphere with a Milky Way band built from the galactic-to-equatorial transform, magnitudes follow N &prop; 10<sup>0.55 m</sup>, colours are blackbody temperatures, and there is no twinkling. The nebula uses emission &prop; n&sup2; with H&alpha;, [O&nbsp;III] and H&beta; colours plus dust that reddens light behind it. The galaxy has an r<sup>1/4</sup> bulge, an exponential disc and two logarithmic arms (pitch about 20&deg;, within the observed range for spirals). Deep-field colours use JWST chromatic ordering (F115W/F200W/F444W as blue/green/red) with the Ly&alpha; break and intergalactic absorption. Readouts assume flat &Lambda;CDM, H<sub>0</sub> = 70 km/s/Mpc, &Omega;<sub>m</sub> = 0.3. The cursor trail's colour follows blackbody temperature with pointer speed.</p>
+    </details>
+    <span>© 2026 Romeo Pallikkara</span>
+    <span><button class="motion" id="motion" type="button" aria-pressed="true">Motion: full</button> &nbsp; Last updated October 2026</span>
+  </div>
+</footer>
+
+<script src="cosmo.js"></script>
+<script src="nebula.js"></script>
+<script src="sky.js"></script>
+<script src="site.js"></script>
 </body>
 </html>

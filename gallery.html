@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | Romeo Pallikkara</title>
+<meta name="description" content="[Short description of the site.]">
+<meta name="theme-color" content="#05060a">
+<meta name="author" content="Romeo Pallikkara">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gallery | Romeo Pallikkara">
+<meta property="og:description" content="[Short description of the site.]">
+<meta property="og:url" content="https://romeopallikkara.github.io/gallery.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gallery | Romeo Pallikkara">
+<meta name="twitter:description" content="[Short description of the site.]">
+<link rel="canonical" href="https://romeopallikkara.github.io/gallery.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%23c8b48a'%3ERP%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script>(function(){var d=document.documentElement,m=null;d.className+=' js';try{m=localStorage.getItem('motion')}catch(e){}if(m!=='full'&&m!=='reduced')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'full';d.dataset.motion=m})()</script>
+</head>
+<body>
+<div class="intro" id="intro" aria-hidden="true"><span class="intro-mark">RP</span><span class="intro-count" id="ic">000</span></div>
+<div class="cur" id="cur" aria-hidden="true"><i></i></div>
+<canvas id="trail" aria-hidden="true"></canvas>
+<canvas id="nebulagl" aria-hidden="true"></canvas>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="nebula" aria-hidden="true"></div>
+<div id="glow" aria-hidden="true"></div>
+<div class="bar" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="full">Romeo Pallikkara</span><span class="short">RP</span></a>
+    <nav class="menu" aria-label="Main navigation">
+      <a href="index.html#about">About</a>
+      <a href="index.html#research">Research</a>
+      <a href="index.html#publications">Publications</a>
+      <a href="gallery.html" aria-current="page">Gallery</a>
+      <a href="cv.pdf">CV</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hud" aria-hidden="true">
+  <div class="hud-left">
+    <span>z <b id="hz">0.00</b></span>
+    <span id="ht">0.0 Gyr ago</span>
+    <span class="epoch" id="he">Today</span>
+    <span id="hs">&ndash; kpc/&Prime;</span>
+    <span id="hl">Ly&alpha; &rarr; 0.12 &micro;m</span>
+  </div>
+  <canvas id="sed" class="sed" width="220" height="48"></canvas>
+</div>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker" style="opacity:1;transform:none">Gallery</p>
+      <h1 class="display" style="font-size:clamp(3rem,10vw,8rem)"><span class="line"><span>[Gallery title]</span></span></h1>
+      <p>[A line or two about who you are outside astronomy.]</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <!-- Replace each [Photo] block with: <img src="images/yourfile.jpg" alt="description" loading="lazy"> -->
+      <div class="shots">
+        <figure class="shot" data-reveal>
+          <div class="frame tall"><div class="ph">[Photo]</div></div>
+          <figcaption>[Place, month year. One line about the moment.]</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <div class="frame wide"><div class="ph">[Photo]</div></div>
+          <figcaption>[Place, month year. One line about the moment.]</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <div class="frame sq"><div class="ph">[Photo]</div></div>
+          <figcaption>[Place, month year. One line about the moment.]</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <div class="frame tall"><div class="ph">[Photo]</div></div>
+          <figcaption>[Place, month year. One line about the moment.]</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <div class="frame wide"><div class="ph">[Photo]</div></div>
+          <figcaption>[Place, month year. One line about the moment.]</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <div class="frame sq"><div class="ph">[Photo]</div></div>
+          <figcaption>[Place, month year. One line about the moment.]</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter notes">
+    <div class="wrap">
+      <h2 data-reveal>Notes</h2>
+      <article class="note" data-reveal>
+        <time>[Month year]</time>
+        <div>
+          <h3>[Title of a short note]</h3>
+          <p>[A few sentences about something personal.]</p>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-name" aria-hidden="true">Romeo Pallikkara</div>
+    <details class="sky-note">
+      <summary>About this sky</summary>
+      <p>The background is procedurally generated and illustrative, not a data image. Stars sit on the celestial sphere with a Milky Way band built from the galactic-to-equatorial transform, magnitudes follow N &prop; 10<sup>0.55 m</sup>, colours are blackbody temperatures, and there is no twinkling. The nebula uses emission &prop; n&sup2; with H&alpha;, [O&nbsp;III] and H&beta; colours plus dust that reddens light behind it. The galaxy has an r<sup>1/4</sup> bulge, an exponential disc and two logarithmic arms (pitch about 20&deg;, within the observed range for spirals). Deep-field colours use JWST chromatic ordering (F115W/F200W/F444W as blue/green/red) with the Ly&alpha; break and intergalactic absorption. Readouts assume flat &Lambda;CDM, H<sub>0</sub> = 70 km/s/Mpc, &Omega;<sub>m</sub> = 0.3. The cursor trail's colour follows blackbody temperature with pointer speed.</p>
+    </details>
+    <span>© 2026 Romeo Pallikkara</span>
+    <span><button class="motion" id="motion" type="button" aria-pressed="true">Motion: full</button> &nbsp; Last updated October 2026</span>
+  </div>
+</footer>
+
+<script src="cosmo.js"></script>
+<script src="nebula.js"></script>
+<script src="sky.js"></script>
+<script src="site.js"></script>
+</body>
+</html>
