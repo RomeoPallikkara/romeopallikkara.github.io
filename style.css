@@ -308,3 +308,6 @@ main, .footer { text-shadow: 0 0 14px rgba(5, 6, 10, .9), 0 0 3px rgba(5, 6, 10,
 
 /* Your own name in author lists */
 .au .me { color: var(--accent); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: rgba(200, 180, 138, .55); text-underline-offset: 3px; }
+
+/* About without a portrait: one calm column, left-aligned with the rest of the page */
+.about .grid { grid-template-columns: minmax(0, 52rem); }
